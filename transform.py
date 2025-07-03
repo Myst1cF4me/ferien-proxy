@@ -3,7 +3,7 @@ from datetime import timedelta
 from icalendar import Calendar, Event
 
 # 1) Quelle: bestehender iCal-Feed für NRW-Schulferien
-SOURCE_URL = "https://www.schulferien.org/deutschland/ical/DE-NW.ics"
+SOURCE_URL = "https://www.feiertage-deutschland.de/kalender-download/ics/schulferien-nordrhein-westfalen.ics"
 
 # 2) Emoji-Mapping
 EMOJI = {
