@@ -1,0 +1,37 @@
+name: Build & Deploy Ferien-Proxy
+
+on:
+  schedule:
+    - cron: '0 3 * * *'     # täglich um 03:00 UTC
+  workflow_dispatch:      # ermöglicht manuelles Auslösen
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Repo klonen
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2) Python einrichten
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 3) Abhängigkeiten installieren
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 4) Feed transformieren
+      - name: Transform feed
+        run: python transform.py > ferien.ics
+
+      # 5) Automatisch committen & pushen
+      - name: Commit & Push ferien.ics
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          file_pattern: 'ferien.ics'
+          commit_message: 'Auto-Update ferien.ics'
+
